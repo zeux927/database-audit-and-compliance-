@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Database Audit &amp; Compliance</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="loginView" class="login-wrap">
+  <form id="loginForm" class="card login-card">
+    <h1>Database Audit &amp; Compliance</h1>
+    <p class="muted">Sign in to continue</p>
+    <label>Username <input id="loginUser" autocomplete="username" required></label>
+    <label>Password <input id="loginPass" type="password" autocomplete="current-password" required></label>
+    <button type="submit" class="btn primary">Login</button>
+    <p id="loginError" class="error"></p>
+    <p class="hint">Demo accounts: <b>admin</b>/admin123 &middot; <b>auditor</b>/auditor123 &middot; <b>user1</b>/user123</p>
+  </form>
+</div>
+
+<!-- ============ APPLICATION ============ -->
+<div id="appView" hidden>
+  <header>
+    <h2>Database Audit &amp; Compliance</h2>
+    <div class="who"><span id="whoami"></span><button id="logoutBtn" class="btn small">Logout</button></div>
+  </header>
+  <nav id="tabs"></nav>
+
+  <main>
+    <div id="toast" class="toast" hidden></div>
+
+    <!-- Employees -->
+    <section id="tab-employees" hidden>
+      <div class="card" id="empFormCard">
+        <h3 id="empFormTitle">Add employee</h3>
+        <form id="empForm" class="grid">
+          <input type="hidden" id="empId">
+          <input id="empName"   placeholder="Full name" required>
+          <input id="empDept"   placeholder="Department" required>
+          <input id="empEmail"  placeholder="Email" type="email" required>
+          <input id="empSalary" placeholder="Salary" type="number" min="0" step="0.01" required>
+          <button class="btn primary" type="submit" id="empSave">Save</button>
+          <button class="btn" type="button" id="empCancel" hidden>Cancel edit</button>
+        </form>
+      </div>
+      <div class="card">
+        <div class="toolbar">
+          <h3>Employees</h3>
+          <input id="empSearch" placeholder="Search name / department...">
+        </div>
+        <div id="empTable" class="table-wrap"></div>
+      </div>
+    </section>
+
+    <!-- Audit log -->
+    <section id="tab-audit" hidden>
+      <div class="card">
+        <div class="toolbar">
+          <h3>Audit log <span class="muted">(who did what, when)</span></h3>
+          <div class="filters">
+            <input id="fUser" placeholder="User">
+            <select id="fAction"><option value="">All actions</option>
+              <option>LOGIN</option><option>LOGOUT</option><option>VIEW_EMPLOYEES</option><option>ADD_EMPLOYEE</option>
+              <option>UPDATE_EMPLOYEE</option><option>DELETE_EMPLOYEE</option><option>HIGH_SALARY_CHANGE</option>
+              <option>CREATE_USER</option><option>UNLOCK_USER</option><option>VIEW_AUDIT</option><option>RUN_COMPLIANCE</option>
+            </select>
+            <select id="fStatus"><option value="">All results</option>
+              <option>SUCCESS</option><option>FAILURE</option><option>DENIED</option></select>
+            <button class="btn" id="fApply">Apply</button>
+          </div>
+        </div>
+        <div id="auditTable" class="table-wrap"></div>
+      </div>
+    </section>
+
+    <!-- Data changes -->
+    <section id="tab-changes" hidden>
+      <div class="card">
+        <h3>Data changes <span class="muted">(recorded by database triggers: before &rarr; after)</span></h3>
+        <div id="changesTable" class="table-wrap"></div>
+      </div>
+    </section>
+
+    <!-- Compliance -->
+    <section id="tab-compliance" hidden>
+      <div class="card">
+        <div class="toolbar"><h3>Compliance report</h3><button class="btn primary" id="runCompliance">Run checks</button></div>
+        <div id="summary" class="summary"></div>
+        <div id="complianceList"></div>
+      </div>
+    </section>
+
+    <!-- Users -->
+    <section id="tab-users" hidden>
+      <div class="card">
+        <h3>Create user</h3>
+        <form id="userForm" class="grid">
+          <input id="uName" placeholder="Username" required>
+          <input id="uPass" type="password" placeholder="Password (min 8 chars)" required>
+          <select id="uRole"><option value="user">user</option><option value="auditor">auditor</option><option value="admin">admin</option></select>
+          <button class="btn primary" type="submit">Create</button>
+        </form>
+      </div>
+      <div class="card"><h3>Users</h3><div id="usersTable" class="table-wrap"></div></div>
+    </section>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
